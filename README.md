@@ -1,4 +1,3 @@
-```markdown
 # Purrfect Cats
 
 CatManager is a Python-based application that simulates the management of both domestic and wild cats. Using Object-Oriented Programming (OOP) concepts, this project models various cat behaviors such as eating, playing, meowing, and sleeping. 
@@ -17,4 +16,3 @@ CatManager is a Python-based application that simulates the management of both d
 ## Acknowledgments
 
 - This project was created as a learning exercise to practice Object-Oriented Programming concepts in Python.
-```
