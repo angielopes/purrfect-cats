@@ -16,30 +16,21 @@ class Cat:
         self.energy = 100
         self.hunger = 0
 
-    def meow(self, hunger_level):
+    def meow(self):
         """
-        Simulates the cat's meow based on its hunger level.
-        Parameters:
-            hunger_level (int): An integer representing the cat's hunger level,
-                            which should be between 0 and 100 inclusive.
-        Raises:
-            ValueError: If the hunger_level is not within the range of 0 to 100.
-        The cat's meow varies depending on its hunger level:
-        - If hunger_level > 70, the cat is not hungry and meows happily.
-        - If 50 < hunger_level <= 70, the cat is satisfied and meows contentedly.
-        - If hunger_level <= 50, the cat is very hungry and meows sadly.
+        Makes the cat meow based on its hunger level.
+        The method prints different meow sounds and corresponding cat face emojis
+        depending on the cat's hunger level:
+        - If hunger > 70: prints "Meow!" with a happy cat face emoji.
+        - If hunger > 50: prints "Meow" with a smiling cat face emoji.
+        - Otherwise: prints "Meow..." with a crying cat face emoji.
         """
-        if 0 <= hunger_level <= 100:
-            if hunger_level > 70:  # Not hungry
-                print("Meow!\U0001f63b")
-            elif hunger_level > 50:  # Satisfied
-                print("Meow\U0001f63a")
-            else:  # Very hungry
-                print("Meow...\U0001f63f")
-        else:
-            raise ValueError(
-                f"Invalid hunger level: {hunger_level}. The cat's hunger should be between 0 and 100."
-            )  # Tratar erro depois
+        if self.hunger > 70:  # Not hungry
+            print("Meow!\U0001f63b")
+        elif self.hunger > 50:  # Satisfied
+            print("Meow\U0001f63a")
+        else:  # Very hungry
+            print("Meow...\U0001f63f")
 
     def eat(self, food):
 
