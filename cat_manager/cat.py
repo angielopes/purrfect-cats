@@ -33,8 +33,15 @@ class Cat:
             print("Meow...\U0001f63f")
 
     def eat(self, food):
-
-        if 0 <= self.hunger < 100 and 0 <= self.energy < 100:
+        """
+        Feeds the cat with a specified amount of food.
+        Parameters:
+            food (int): The amount of food to feed the cat. Must be between 0 and 100.
+        Raises:
+            ValueError: If the food level is not between 0 and 100.
+            ValueError: If the cat's hunger level is already 0.
+        """
+        if self.hunger != 0:
             if 0 <= food <= 100:
                 self.hunger = max(self.hunger - food, 0)
                 self.energy = min(self.energy + food, 100)
@@ -43,11 +50,11 @@ class Cat:
                     f"Invalid food level: {food}. The level should be between 0 and 100."
                 )
         else:
-            raise ValueError(
-                f"Invalid food level: {food}. The level should be between 0 and 100."
-            )
+            raise ValueError(f"The cat can't eat because its hunger level is 0.")
 
 
-my_cat = Cat(name="Marceline", age=2, color="Black and White")
-my_cat.meow(0)
-my_cat.eat(20)
+# my_cat = Cat(name="Marceline", age=2, color="Black and White")
+# my_cat.hunger = 50
+# my_cat.energy = 45
+# my_cat.eat(20)
+# print(f"Fome após comer: {my_cat.hunger}, Energia após comer: {my_cat.energy}")
