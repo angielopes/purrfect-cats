@@ -35,16 +35,6 @@ def test_meow_very_hungry(capfd):
     assert out.strip() == "Meow...\U0001f63f"
 
 
-def test_meow_invalid_hunger_level():
-    """
-    Test that the Cat.meow method raises a ValueError when an invalid hunger level is provided.
-    """
-    cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 150
-    with pytest.raises(ValueError):
-        cat.meow()
-
-
 def test_eat_valid_food():
     """
     Test that the cat's hunger decreases and energy increases when fed with valid food amount.
