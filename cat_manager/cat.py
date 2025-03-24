@@ -25,9 +25,9 @@ class Cat:
         - If hunger > 50: prints "Meow" with a smiling cat face emoji.
         - Otherwise: prints "Meow..." with a crying cat face emoji.
         """
-        if self.hunger > 70:  # Not hungry
+        if self.hunger < 30:  # Not hungry
             print("Meow!\U0001f63b")
-        elif self.hunger > 50:  # Satisfied
+        elif self.hunger < 60:  # Satisfied
             print("Meow\U0001f63a")
         else:  # Very hungry
             print("Meow...\U0001f63f")
