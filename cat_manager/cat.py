@@ -52,9 +52,35 @@ class Cat:
         else:
             raise ValueError(f"The cat can't eat because its hunger level is 0.")
 
+    def play(self, time):
+        """
+        Allows the cat to play for a specified amount of time, adjusting its energy and hunger levels accordingly.
+
+        Parameters:
+            time (int): The amount of time the cat plays, in minutes. Must be between 0 and 100 inclusive.
+        Raises:
+            ValueError: If the time is not within the valid range (0 to 100 minutes).
+            ValueError: If the cat's energy is 30 or less, or if its hunger is 70 or more.
+        """
+        if self.energy > 30 and self.hunger < 70:
+            if 0 <= time <= 100:
+                self.energy = max(self.energy - time, 0)
+                self.hunger = min(self.hunger + time, 100)
+            else:
+                raise ValueError(
+                    f"Invalid time level: {time}. The time should be between 0 and 100 minutes."
+                )
+        else:
+            raise ValueError(
+                "The cat cannot play right now. Check if he is hungry or has low energy."
+            )
+
+
+# <==== Quick tests ====>
 
 # my_cat = Cat(name="Marceline", age=2, color="Black and White")
-# my_cat.hunger = 50
-# my_cat.energy = 45
-# my_cat.eat(20)
-# print(f"Fome após comer: {my_cat.hunger}, Energia após comer: {my_cat.energy}")
+# my_cat.hunger = 0
+# my_cat.energy = 100
+# # my_cat.eat(20)
+# my_cat.play(150)
+# print(f"Fome: {my_cat.hunger}, Energia: {my_cat.energy}")
