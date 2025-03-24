@@ -7,7 +7,7 @@ def test_meow_not_hungry(capfd):
     Test that the cat meows with a happy face emoji when not hungry.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 80
+    cat.hunger = 20
     cat.meow()
     out, err = capfd.readouterr()
     assert out.strip() == "Meow!\U0001f63b"
@@ -18,7 +18,7 @@ def test_meow_satisfied(capfd):
     Test that the Cat's meow method outputs the correct satisfied meow sound.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 60
+    cat.hunger = 40
     cat.meow()
     out, err = capfd.readouterr()
     assert out.strip() == "Meow\U0001f63a"
@@ -29,7 +29,7 @@ def test_meow_very_hungry(capfd):
     Test the meow method of the Cat class when the cat is very hungry.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 30
+    cat.hunger = 70
     cat.meow()
     out, err = capfd.readouterr()
     assert out.strip() == "Meow...\U0001f63f"
