@@ -40,6 +40,48 @@ def test_meow_invalid_hunger_level():
     Test that the Cat.meow method raises a ValueError when an invalid hunger level is provided.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.huner = 150
+    cat.hunger = 150
     with pytest.raises(ValueError):
         cat.meow()
+
+
+def test_eat_valid_food():
+    """
+    Test that the cat's hunger decreases and energy increases when fed with valid food amount.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.hunger = 50
+    cat.energy = 50
+    cat.eat(30)
+    assert cat.hunger == 20
+    assert cat.energy == 80
+
+
+def test_eat_invalid_food_amount():
+    """
+    Test that the eat method raises a ValueError when an invalid food amount is provided.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    with pytest.raises(ValueError):
+        cat.eat(150)
+
+
+def test_eat_when_not_hungry():
+    """
+    Test that the eat method raises a ValueError when the cat's hunger level is already 0.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.hunger = 0
+    with pytest.raises(ValueError):
+        cat.eat(20)
+
+
+def test_eat_max_energy():
+    """
+    Test that the cat's energy does not exceed 100 when fed.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.hunger = 50
+    cat.energy = 90
+    cat.eat(20)
+    assert cat.energy == 100
