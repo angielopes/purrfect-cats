@@ -75,3 +75,44 @@ def test_eat_max_energy():
     cat.energy = 90
     cat.eat(20)
     assert cat.energy == 100
+
+
+def test_play_valid_time():
+    """
+    Test that the cat's energy decreases and hunger increases when it plays for a valid amount of time.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.energy = 80
+    cat.hunger = 40
+    cat.play(30)
+    assert cat.energy == 50
+    assert cat.hunger == 70
+
+
+def test_play_invalid_time():
+    """
+    Test that the play method raises a ValueError when an invalid time is provided.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    with pytest.raises(ValueError):
+        cat.play(150)
+
+
+def test_play_low_energy():
+    """
+    Test that the play method raises a ValueError when the cat's energy is too low.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.energy = 20
+    with pytest.raises(ValueError):
+        cat.play(20)
+
+
+def test_play_high_hunger():
+    """
+    Test that the play method raises a ValueError when the cat's hunger is too high.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.hunger = 80
+    with pytest.raises(ValueError):
+        cat.play(20)
