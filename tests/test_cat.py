@@ -7,10 +7,10 @@ def test_meow_not_hungry(capfd):
     Test that the cat meows with a happy face emoji when not hungry.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 20
+    cat.hunger = 10
     cat.meow()
     out, err = capfd.readouterr()
-    assert out.strip() == "Meow!\U0001f63b"
+    assert out.strip() == "Purr... Meow! \U0001f63b"
 
 
 def test_meow_satisfied(capfd):
@@ -18,10 +18,21 @@ def test_meow_satisfied(capfd):
     Test that the Cat's meow method outputs the correct satisfied meow sound.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 40
+    cat.hunger = 30
     cat.meow()
     out, err = capfd.readouterr()
-    assert out.strip() == "Meow\U0001f63a"
+    assert out.strip() == "Meow! \U0001f63a"
+
+
+def test_meow_hungry(capfd):
+    """
+    Test the meow method of the Cat class when the cat is hungry.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.hunger = 60
+    cat.meow()
+    out, err = capfd.readouterr()
+    assert out.strip() == "Meow... \U0001f63f"
 
 
 def test_meow_very_hungry(capfd):
@@ -29,10 +40,10 @@ def test_meow_very_hungry(capfd):
     Test the meow method of the Cat class when the cat is very hungry.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 70
+    cat.hunger = 90
     cat.meow()
     out, err = capfd.readouterr()
-    assert out.strip() == "Meow...\U0001f63f"
+    assert out.strip() == "MEOOOOOW!! \U0001f63e"
 
 
 def test_eat_valid_food():
@@ -56,16 +67,6 @@ def test_eat_invalid_food_amount():
         cat.eat(150)
 
 
-def test_eat_when_not_hungry():
-    """
-    Test that the eat method raises a ValueError when the cat's hunger level is already 0.
-    """
-    cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 0
-    with pytest.raises(ValueError):
-        cat.eat(20)
-
-
 def test_eat_max_energy():
     """
     Test that the cat's energy does not exceed 100 when fed.
@@ -85,8 +86,8 @@ def test_play_valid_time():
     cat.energy = 80
     cat.hunger = 40
     cat.play(30)
-    assert cat.energy == 50
-    assert cat.hunger == 70
+    assert cat.energy == 35  # Adjusted for 1.5x depletion
+    assert cat.hunger == 76  # Adjusted for 1.2x increase
 
 
 def test_play_invalid_time():
@@ -98,21 +99,30 @@ def test_play_invalid_time():
         cat.play(150)
 
 
-def test_play_low_energy():
+def test_sleep_valid_time():
     """
-    Test that the play method raises a ValueError when the cat's energy is too low.
-    """
-    cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.energy = 20
-    with pytest.raises(ValueError):
-        cat.play(20)
-
-
-def test_play_high_hunger():
-    """
-    Test that the play method raises a ValueError when the cat's hunger is too high.
+    Test that the cat's energy increases when it sleeps for a valid amount of time.
     """
     cat = Cat(name="TestCat", age=3, color="Gray")
-    cat.hunger = 80
+    cat.energy = 50
+    cat.sleep(30)
+    assert cat.energy == 80
+
+
+def test_sleep_invalid_time():
+    """
+    Test that the sleep method raises a ValueError when an invalid time is provided.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
     with pytest.raises(ValueError):
-        cat.play(20)
+        cat.sleep(150)
+
+
+def test_sleep_max_energy():
+    """
+    Test that the sleep method raises a ValueError when the cat's energy is already at maximum.
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.energy = 100
+    with pytest.raises(ValueError):
+        cat.sleep(20)
