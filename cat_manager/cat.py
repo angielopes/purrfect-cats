@@ -109,13 +109,13 @@ class Cat:
                 print(
                     f"{self.name.title()} is too tired to play much, energy depletes faster."
                 )
-                self.energy = max(self.energy - time * 1.5, 0)
+                self.energy = max(self.energy - (time * 1.5), 0)
             else:
                 self.energy = max(self.energy - time, 0)
 
             if self.hunger >= 70:
                 print(f"{self.name.title()} is playing but is very hungry!")
-                self.hunger = min(self.hunger + time * 1.2, 100)
+                self.hunger = min(self.hunger + (time * 1.2), 100)
             else:
                 self.hunger = min(self.hunger + time, 100)
 
@@ -144,12 +144,3 @@ class Cat:
                 )
         else:
             raise ValueError("The cat is too energetic to sleep now.")
-
-
-# <==== Quick tests ====>
-
-# my_cat = Cat(name="Marceline", age=2, color="Black and White", energy=80, hunger=30)
-# my_cat.eat(20)
-# my_cat.play(30)
-# my_cat.sleep(10)
-# print(f"Fome: {my_cat.hunger}, Energia: {my_cat.energy}")
