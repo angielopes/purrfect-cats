@@ -86,8 +86,20 @@ def test_play_valid_time():
     cat.energy = 80
     cat.hunger = 40
     cat.play(30)
-    assert cat.energy == 35  # Adjusted for 1.5x depletion
-    assert cat.hunger == 76  # Adjusted for 1.2x increase
+    assert cat.energy == 50
+    assert cat.hunger == 70
+
+
+def test_play_low_energy():
+    """
+    Test that when the cat has 30 or less energy, it depletes faster (1.5x).
+    """
+    cat = Cat(name="TestCat", age=3, color="Gray")
+    cat.energy = 30
+    cat.hunger = 40
+    cat.play(20)
+    assert cat.energy == 0  # 1.5x depletion
+    assert cat.hunger == 60  # 1.2x increase
 
 
 def test_play_invalid_time():
