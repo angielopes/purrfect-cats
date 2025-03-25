@@ -75,12 +75,34 @@ class Cat:
                 "The cat cannot play right now. Check if he is hungry or has low energy."
             )
 
+    def sleep(self, time):
+        """
+        Makes the cat sleep for a specified amount of time, increasing its energy level.
+        Args:
+            time (int): The amount of time (in minutes) the cat sleeps. Must be between 0 and 100.
+        Raises:
+            ValueError: If the time is not within the range of 0 to 100 minutes.
+            ValueError: If the cat's energy level is already at 100 or above, indicating it is too energetic to sleep.
+        Notes:
+            The cat's energy level will not exceed 100, even if the time provided would result in a higher value.
+        """
+        if self.energy < 100:
+            if 0 <= time <= 100:
+                self.energy = min(self.energy + time, 100)
+            else:
+                raise ValueError(
+                    f"Invalid time level: {time}. The time should be between 0 and 100 minutes."
+                )
+        else:
+            raise ValueError("The cat is too energetic to sleep now.")
+
 
 # <==== Quick tests ====>
 
-# my_cat = Cat(name="Marceline", age=2, color="Black and White")
-# my_cat.hunger = 0
-# my_cat.energy = 100
-# # my_cat.eat(20)
-# my_cat.play(150)
-# print(f"Fome: {my_cat.hunger}, Energia: {my_cat.energy}")
+my_cat = Cat(name="Marceline", age=2, color="Black and White")
+my_cat.hunger = 0
+my_cat.energy = 100
+# my_cat.eat(20)
+my_cat.play(50)
+my_cat.sleep(30)
+print(f"Fome: {my_cat.hunger}, Energia: {my_cat.energy}")
