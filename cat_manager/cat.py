@@ -179,3 +179,25 @@ class DomesticCat(Cat):
         against the user's leg and purring to request attention and affection.
         """
         print(f"{self.name} rubs against your leg and purrs, asking for affection.")
+
+
+class WildCat(Cat):
+
+    def __init__(self, name: str, age: int, color: str, energy=100, hunger=0):
+
+        super().__init__(name, age, color, energy, hunger)
+
+    def meow(self):
+
+        if self.hunger < 20:  # Not hungry
+            print("Grrrrrrrrrrhhhhh! \U0001f63b")
+        elif self.hunger < 50:  # Satisfied
+            print("MRAAAAHHHRR! \U0001f63a")
+        elif self.hunger < 80:  # Hungry
+            print("HSSSSSSS!!! \U0001f63f")
+        else:
+            print("RRAAAUUUGGHHH!! \U0001f63e")  # Very hungry and irritated
+
+    def hunt(self, prey_size, success, difficulty):
+
+        
