@@ -144,3 +144,38 @@ class Cat:
                 )
         else:
             raise ValueError("The cat is too energetic to sleep now.")
+
+
+class DomesticCat(Cat):
+    """
+    DomesticCat is a subclass of Cat that represents a domesticated cat with specific behaviors.
+    Attributes:
+        energy (int): The energy level of the cat. Defaults to 100.
+        hunger (int): The hunger level of the cat. Defaults to 0.
+    Methods:
+        __init__(name: str, age: int, color: str, energy=100, hunger=0):
+            Initializes a DomesticCat instance with the given attributes.
+        ask_for_affection():
+            Displays a message indicating that the cat is seeking affection by rubbing
+            against the user's leg and purring.
+    """
+
+    def __init__(self, name: str, age: int, color: str, energy=100, hunger=0):
+        """
+        Initialize the Cat parent class with the given attributes.
+        Args:
+            name (str): The name of the cat.
+            age (int): The age of the cat in years.
+            color (str): The color of the cat's fur.
+            energy (int, optional): The energy level of the cat. Defaults to 100.
+            hunger (int, optional): The hunger level of the cat. Defaults to 0.
+        """
+        super().__init__(name, age, color, energy, hunger)
+
+    def ask_for_affection(self):
+        """
+        Displays a message indicating that the cat is seeking affection.
+        This method prints a message describing the cat's behavior of rubbing
+        against the user's leg and purring to request attention and affection.
+        """
+        print(f"{self.name} rubs against your leg and purrs, asking for affection.")
