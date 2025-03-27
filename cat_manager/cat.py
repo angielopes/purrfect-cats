@@ -224,7 +224,7 @@ class WildCat(Cat):
 
         if self.hunger >= 80:
             print(
-                f"{self.name.title()} is very hunger, so the hunting success will be lower."
+                f"{self.name.title()} is very hungry, so the hunting success will be lower."
             )
 
         # On going
