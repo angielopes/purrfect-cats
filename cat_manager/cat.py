@@ -198,6 +198,33 @@ class WildCat(Cat):
         else:
             print("RRAAAUUUGGHHH!! \U0001f63e")  # Very hungry and irritated
 
-    def hunt(self, prey_size, success, difficulty):
+    def rest(self):
 
-        
+        pass  # TODO: Implement the rest logic later
+
+    def hunt(self):
+
+        if self.hunger == 100 and self.energy == 0:
+            print(
+                f"{self.name.title()} is exhausted and hungry, so it won't be able to hunt."
+            )
+            # raise NotImplementedError("The 'rest' method is not implemented yet.")
+
+            # Simulation of a temporary rest.
+            self.energy += 30
+            self.hunger -= 20
+            print(f"{self.name.title()} has rested temporarily.")
+            return
+
+        if self.energy <= 30:
+            print(
+                f"{self.name.title()} is very tired, so the hunting success will be lower."
+            )
+            prey_size = "small"
+
+        if self.hunger >= 80:
+            print(
+                f"{self.name.title()} is very hungry, so the hunting success will be lower."
+            )
+
+        # On going
