@@ -282,8 +282,7 @@ class WildCat(Cat):
                 # Recovery of energy and hunger depending on the size of the prey
                 if prey_size == "large":
                     self.energy += randint(20, 40)
-                    self.hunger - +randint(30, 50)
-
+                    self.hunger -= randint(30, 50)
                 if prey_size == "medium":
                     self.energy += randint(10, 30)
                     self.hunger -= randint(20, 40)
