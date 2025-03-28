@@ -149,6 +149,6 @@ def test_wildcat_rest_increases_energy(monkeypatch):
     cat.energy = 0
 
     # Mock randint to control the random energy increase
-    monkeypatch.setattr("cat_manager.cat.randint", lambda a, b: 20)
+    monkeypatch.setattr("cat_manager.cat.randint", lambda a, b: 30)
     cat.rest()
-    assert cat.energy == 20
+    assert cat.energy == 30
