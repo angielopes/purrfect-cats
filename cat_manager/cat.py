@@ -193,9 +193,9 @@ class WildCat(Cat):
     def meow(self):
 
         if self.hunger < 20:  # Not hungry
-            print("Grrrrrrrrrrhhhhh! \U0001f63b")
+            print("Grrrrrrrrrrhhhhh! \U0001f63a")
         elif self.hunger < 50:  # Satisfied
-            print("MRAAAAHHHRR! \U0001f63a")
+            print("MRAAAAHHHRR! \U0001f63c")
         elif self.hunger < 80:  # Hungry
             print("HSSSSSSS!!! \U0001f63f")
         else:
