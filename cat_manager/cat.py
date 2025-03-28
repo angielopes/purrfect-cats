@@ -1,3 +1,6 @@
+from random import randint
+
+
 class Cat:
     """
     A class representing a cat with attributes for its name, age, color, energy level, and hunger level.
@@ -199,8 +202,15 @@ class WildCat(Cat):
             print("RRAAAUUUGGHHH!! \U0001f63e")  # Very hungry and irritated
 
     def rest(self):
-
-        pass  # TODO: Implement the rest logic later
+        """
+        Allows the cat to rest and regain energy.
+        This method simulates the cat taking a rest to recover energy.
+        It increases the cat's energy level by a random amount between 30 and 50.
+        Returns:
+            None
+        """
+        print(f"{self.name.title()} is resting to regain energy.")
+        self.energy += randint(30, 50)
 
     def hunt(self):
 

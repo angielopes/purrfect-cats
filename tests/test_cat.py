@@ -1,5 +1,6 @@
 import pytest
 from cat_manager.cat import Cat
+from cat_manager.cat import WildCat
 
 
 def test_meow_not_hungry(capfd):
@@ -138,3 +139,16 @@ def test_sleep_max_energy():
     cat.energy = 100
     with pytest.raises(ValueError):
         cat.sleep(20)
+
+
+def test_wildcat_rest_increases_energy(monkeypatch):
+    """
+    Test that the WildCat's rest method increases energy by a random amount.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+    cat.energy = 0
+
+    # Mock randint to control the random energy increase
+    monkeypatch.setattr("cat_manager.cat.randint", lambda a, b: 20)
+    cat.rest()
+    assert cat.energy == 20
