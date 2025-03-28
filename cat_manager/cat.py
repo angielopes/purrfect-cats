@@ -230,27 +230,68 @@ class WildCat(Cat):
 
     def hunt(self):
 
+        # TODO: Modularize (can_hunt, determine_prey_size, calculate_success, process_hunt_result)
+
+        # Check if the cat is too tired or too hungry to hunt
         if self.hunger == 100 and self.energy == 0:
             print(
                 f"{self.name.title()} is exhausted and hungry, so it won't be able to hunt."
             )
-            # raise NotImplementedError("The 'rest' method is not implemented yet.")
-
-            # Simulation of a temporary rest.
-            self.energy += 30
-            self.hunger -= 20
-            print(f"{self.name.title()} has rested temporarily.")
+            self.rest()
             return
 
+        # Inform the state of the cat
         if self.energy <= 30:
             print(
                 f"{self.name.title()} is very tired, so the hunting success will be lower."
             )
-            prey_size = "small"
 
         if self.hunger >= 80:
             print(
                 f"{self.name.title()} is very hungry, so the hunting success will be lower."
             )
 
-        # On going
+        if self.hunger != 0:
+
+            # Determine the size of the prey based on the average of energy and hunger
+            average = (self.energy + (100 - self.hunger)) / 2
+
+            if average >= 80:
+                prey_size = "large"
+            elif average >= 50:
+                prey_size = "medium"
+            else:
+                prey_size = "small"
+
+            print(f"{self.name.title()} is hunting a {prey_size} prey.")
+
+            # Simulating the chance of success based on the size of the prey and the cat's energy
+            success = 50
+
+            # Adjust success based on energy and hunger
+            if self.energy <= 30:
+                success -= 10  # If the energy is too low, the chance decreases
+
+            if self.hunger >= 80:
+                success -= 10  # If the hunger is too high, the chance also decreases
+
+            # Success or failure of the hunt
+            if randint(1, 100) <= success:
+                print(f"{self.name.title()} successfully caught the {prey_size} prey!")
+
+                # Recovery of energy and hunger depending on the size of the prey
+                if prey_size == "large":
+                    self.energy += randint(20, 40)
+                    self.hunger -= randint(30, 50)
+                if prey_size == "medium":
+                    self.energy += randint(10, 30)
+                    self.hunger -= randint(20, 40)
+
+                if prey_size == "small":
+                    self.energy += randint(5, 20)
+                    self.hunger -= randint(10, 30)
+            else:
+                print(f"{self.name.title()} failed to catch the {prey_size} prey.")
+                self.energy -= 10
+        else:
+            print(f"{self.name.title()} is not hungry, so it won't hunt.")
