@@ -187,11 +187,27 @@ class DomesticCat(Cat):
 class WildCat(Cat):
 
     def __init__(self, name: str, age: int, color: str, energy=100, hunger=0):
-
+        """
+        Initialize a Cat instance with the given attributes.
+        Args:
+            name (str): The name of the cat.
+            age (int): The age of the cat in years.
+            color (str): The color of the cat's fur.
+            energy (int, optional): The energy level of the cat. Defaults to 100.
+            hunger (int, optional): The hunger level of the cat. Defaults to 0.
+        """
         super().__init__(name, age, color, energy, hunger)
 
     def meow(self):
-
+        """
+        Simulates the cat's meowing behavior based on its hunger level.
+        The method prints different meowing sounds and corresponding emojis
+        depending on the cat's hunger level:
+        - Hunger < 20: Not hungry, emits a playful meow.
+        - Hunger < 50: Satisfied, emits a content meow.
+        - Hunger < 80: Hungry, emits an irritated hiss.
+        - Hunger >= 80: Very hungry and irritated, emits an aggressive growl.
+        """
         if self.hunger < 20:  # Not hungry
             print("Grrrrrrrrrrhhhhh! \U0001f63a")
         elif self.hunger < 50:  # Satisfied
