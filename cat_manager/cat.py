@@ -236,8 +236,7 @@ class WildCat(Cat):
         prey_size = self.determine_prey_size()
         print(f"{self.name.title()} is hunting a {prey_size} prey.")
 
-        success = self.calculate_success()
-
+        success = self.calculate_success(prey_size)
         if randint(1, 100) <= success:
             print(f"{self.name.title()} successfully caught the {prey_size} prey!")
             self.process_hunt_result(prey_size, success=True)
