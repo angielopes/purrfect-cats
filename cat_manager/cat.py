@@ -230,68 +230,70 @@ class WildCat(Cat):
 
     def hunt(self):
 
-        # TODO: Modularize (can_hunt, determine_prey_size, calculate_success, process_hunt_result)
+        if not self.can_hunt():
+            return
 
-        # Check if the cat is too tired or too hungry to hunt
+        prey_size = self.determine_prey_size()
+        print(f"{self.name.title()} is hunting a {prey_size} prey.")
+
+        success = self.calculate_success(prey_size)
+        if randint(1, 100) <= success:
+            print(f"{self.name.title()} successfully caught the {prey_size} prey!")
+            self.process_hunt_result(prey_size, success=True)
+        else:
+            print(f"{self.name.title()} failed to catch the {prey_size} prey.")
+            self.process_hunt_result(prey_size, success=False)
+
+    def can_hunt(self):
+
         if self.hunger == 100 and self.energy == 0:
             print(
                 f"{self.name.title()} is exhausted and hungry, so it won't be able to hunt."
             )
             self.rest()
-            return
+            return False
 
-        # Inform the state of the cat
-        if self.energy <= 30:
-            print(
-                f"{self.name.title()} is very tired, so the hunting success will be lower."
-            )
-
-        if self.hunger >= 80:
-            print(
-                f"{self.name.title()} is very hungry, so the hunting success will be lower."
-            )
-
-        if self.hunger != 0:
-
-            # Determine the size of the prey based on the average of energy and hunger
-            average = (self.energy + (100 - self.hunger)) / 2
-
-            if average >= 80:
-                prey_size = "large"
-            elif average >= 50:
-                prey_size = "medium"
-            else:
-                prey_size = "small"
-
-            print(f"{self.name.title()} is hunting a {prey_size} prey.")
-
-            # Simulating the chance of success based on the size of the prey and the cat's energy
-            success = 50
-
-            # Adjust success based on energy and hunger
-            if self.energy <= 30:
-                success -= 10  # If the energy is too low, the chance decreases
-
-            if self.hunger >= 80:
-                success -= 10  # If the hunger is too high, the chance also decreases
-
-            # Success or failure of the hunt
-            if randint(1, 100) <= success:
-                print(f"{self.name.title()} successfully caught the {prey_size} prey!")
-
-                # Recovery of energy and hunger depending on the size of the prey
-                if prey_size == "large":
-                    self.energy += randint(20, 40)
-                    self.hunger -= randint(30, 50)
-                if prey_size == "medium":
-                    self.energy += randint(10, 30)
-                    self.hunger -= randint(20, 40)
-
-                if prey_size == "small":
-                    self.energy += randint(5, 20)
-                    self.hunger -= randint(10, 30)
-            else:
-                print(f"{self.name.title()} failed to catch the {prey_size} prey.")
-                self.energy -= 10
-        else:
+        if self.hunger == 0:
             print(f"{self.name.title()} is not hungry, so it won't hunt.")
+            return False
+        return True
+
+    def determine_prey_size(self):
+
+        average = (self.energy + (100 - self.hunger)) / 2
+        if average >= 80:
+            return "large"
+        elif average >= 50:
+            return "medium"
+        else:
+            return "small"
+
+    def calculate_success(self, prey_size):
+
+        success = 50
+
+        if prey_size == "large":
+            success -= 10
+        elif prey_size == "small":
+            success -= 10
+
+        if self.energy <= 30:
+            success -= 10
+        if self.hunger >= 80:
+            success -= 10
+
+        return max(success, 5)
+
+    def process_hunt_result(self, prey_size, success):
+
+        if success:
+            energy_gain = {"large": (20, 40), "medium": (10, 30), "small": (5, 20)}
+            hunger_reduction = {
+                "large": (30, 50),
+                "medium": (20, 40),
+                "small": (10, 30),
+            }
+            self.energy += randint(*energy_gain[prey_size])
+            self.hunger -= randint(*hunger_reduction[prey_size])
+        else:
+            self.energy -= 10
