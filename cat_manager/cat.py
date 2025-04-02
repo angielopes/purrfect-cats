@@ -284,9 +284,9 @@ class WildCat(Cat):
 
         return max(success, 5)
 
-    def process_hunt_result(self, prey_size, sucess):
+    def process_hunt_result(self, prey_size, success):
 
-        if sucess:
+        if success:
             energy_gain = {"large": (20, 40), "medium": (10, 30), "small": (5, 20)}
             hunger_reduction = {
                 "large": (30, 50),
