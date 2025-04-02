@@ -152,3 +152,141 @@ def test_wildcat_rest_increases_energy(monkeypatch):
     monkeypatch.setattr("cat_manager.cat.randint", lambda a, b: 30)
     cat.rest()
     assert cat.energy == 30
+
+
+def test_wildcat_hunt_success(monkeypatch):
+    """
+    Test that the WildCat successfully hunts prey and adjusts energy and hunger levels.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+    cat.energy = 50
+    cat.hunger = 50
+
+    # Mock methods to control behavior
+    monkeypatch.setattr(cat, "determine_prey_size", lambda: "medium")
+    monkeypatch.setattr(
+        cat, "calculate_success", lambda prey_size: 100
+    )  # Always succeed
+    monkeypatch.setattr(
+        "cat_manager.cat.randint", lambda a, b: 30
+    )  # Fixed random values
+
+    cat.hunt()
+    assert cat.energy == 80  # +30 energy
+    assert cat.hunger == 20  # -30 hunger
+
+
+def test_wildcat_hunt_failure(monkeypatch):
+    """
+    Test that the WildCat fails to hunt prey and loses energy.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+    cat.energy = 50
+    cat.hunger = 50
+
+    # Mock methods to control behavior
+    monkeypatch.setattr(cat, "determine_prey_size", lambda: "medium")
+    monkeypatch.setattr(cat, "calculate_success", lambda prey_size: 0)  # Always fail
+
+    cat.hunt()
+    assert cat.energy == 40  # -10 energy
+    assert cat.hunger == 50  # Hunger remains unchanged
+
+
+def test_wildcat_can_hunt(monkeypatch):
+    """
+    Test the can_hunt method for different conditions.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+
+    # Case: Too hungry and exhausted
+    cat.energy = 0
+    cat.hunger = 100
+    assert not cat.can_hunt()
+
+    # Case: Not hungry
+    cat.energy = 50
+    cat.hunger = 0
+    assert not cat.can_hunt()
+
+    # Case: Can hunt
+    cat.hunger = 50
+    assert cat.can_hunt()
+
+
+def test_wildcat_determine_prey_size():
+    """
+    Test the determine_prey_size method for different energy and hunger levels.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+
+    # Case: Large prey
+    cat.energy = 90
+    cat.hunger = 10
+    assert cat.determine_prey_size() == "large"
+
+    # Case: Medium prey
+    cat.energy = 50
+    cat.hunger = 50
+    assert cat.determine_prey_size() == "medium"
+
+    # Case: Small prey
+    cat.energy = 20
+    cat.hunger = 80
+    assert cat.determine_prey_size() == "small"
+
+
+def test_wildcat_calculate_success():
+    """
+    Test the calculate_success method for different prey sizes and conditions.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+
+    # Case: Large prey with low energy and high hunger
+    cat.energy = 20
+    cat.hunger = 90
+    assert cat.calculate_success("large") == 30  # Adjusted for new logic
+
+    # Case: Medium prey with balanced energy and hunger
+    cat.energy = 50
+    cat.hunger = 50
+    assert cat.calculate_success("medium") == 50
+
+    # Case: Small prey with high energy and low hunger
+    cat.energy = 90
+    cat.hunger = 10
+    assert cat.calculate_success("small") == 60  # +10 for small prey
+
+    # Case: Large prey with high energy and low hunger
+    cat.energy = 90
+    cat.hunger = 10
+    assert cat.calculate_success("large") == 40  # -10 for large prey
+
+
+def test_wildcat_process_hunt_result_success(monkeypatch):
+    """
+    Test the process_hunt_result method when the hunt is successful.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+    cat.energy = 50
+    cat.hunger = 50
+
+    # Mock random values
+    monkeypatch.setattr("cat_manager.cat.randint", lambda a, b: 20)
+
+    cat.process_hunt_result("medium", success=True)
+    assert cat.energy == 70  # +20 energy
+    assert cat.hunger == 30  # -20 hunger
+
+
+def test_wildcat_process_hunt_result_failure():
+    """
+    Test the process_hunt_result method when the hunt fails.
+    """
+    cat = WildCat(name="WildTestCat", age=4, color="Brown")
+    cat.energy = 50
+    cat.hunger = 50
+
+    cat.process_hunt_result("medium", success=False)
+    assert cat.energy == 40  # -10 energy
+    assert cat.hunger == 50  # Hunger remains unchanged

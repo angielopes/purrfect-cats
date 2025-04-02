@@ -275,14 +275,14 @@ class WildCat(Cat):
         if prey_size == "large":
             success -= 10
         elif prey_size == "small":
-            success -= 10
+            success += 10
 
         if self.energy <= 30:
             success -= 10
         if self.hunger >= 80:
             success -= 10
 
-        return max(success, 5)
+        return success
 
     def process_hunt_result(self, prey_size, success):
 
